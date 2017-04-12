@@ -1,3 +1,6 @@
+### 0.6.0
+  * Added metrics `metrics(name, value)`. Thanks @nachooya
+
 ### 0.5.1
   * Set `onLag` default threshould to `maxLag()`. Thanks @flentini
 

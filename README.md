@@ -87,11 +87,16 @@ toobusy.maxLag(10);
 // but may cause the check to be too sensitive.
 toobusy.interval(250);
 
+// Add an accumulative metrics which will be reported onLog event
+toobusy.metric ('foo', 1);
+toobusy.metric ('bar', 100);
+
 // Get current maxLag or interval setting by calling without parameters.
 var currentMaxLag = toobusy.maxLag(), interval = toobusy.interval();
 
-toobusy.onLag(function(currentLag) {
+toobusy.onLag(function(currentLag, metrics) {
   console.log("Event loop lag detected! Latency: " + currentLag + "ms");
+  console.log("Metrics during interval: ", metrics);
 });
 ```
 

@@ -62,6 +62,8 @@ describe('toobusy()', function() {
   beforeEach(function() {
     toobusy.maxLag(10);
     toobusy.interval(250);
+    toobusy.metric('foo', 1);
+    toobusy.metric('bar', 100);
   });
   afterEach(function() {
     toobusy.maxLag(70);
@@ -102,7 +104,7 @@ describe('toobusy()', function() {
       return function (done) {
         var calledDone = false;
 
-        toobusy.onLag(function (lag) {
+        toobusy.onLag(function (lag, metrics) {
           if (calledDone) {
             return;
           }
@@ -114,6 +116,8 @@ describe('toobusy()', function() {
           }
 
           should.exist(lag);
+          should.exist(metrics.foo);
+          should.exist(metrics.bar);
           lag.should.be.above(threshold || 0);
 
           calledDone = true;

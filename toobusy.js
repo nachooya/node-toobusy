@@ -27,6 +27,7 @@ var currentLag = 0;
 var checkInterval;
 var lagEventThreshold = -1;
 var eventEmitter = new events.EventEmitter();
+var metrics = {};
 
 /**
  * Main export function.
@@ -142,6 +143,13 @@ toobusy.onLag = function (fn, threshold) {
   eventEmitter.on(LAG_EVENT, fn);
 };
 
+toobusy.metric = function (name, value) {
+
+  if (!metrics[name]) metrics[name] = 0;
+  metrics[name] += value;
+
+}
+
 /**
  * Private - starts checking lag.
  */
@@ -155,8 +163,10 @@ function start() {
     lastTime = now;
 
     if (lagEventThreshold !== -1 && currentLag > lagEventThreshold) {
-      eventEmitter.emit(LAG_EVENT, currentLag);
+      eventEmitter.emit(LAG_EVENT, currentLag, metrics);
     }
+
+    metrics = {};
 
   }, interval);
 
