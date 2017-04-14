@@ -1,3 +1,6 @@
+### 0.6.1
+  * Added metricsPrev paramater to `onLag` event. Thanks @nachooya
+
 ### 0.6.0
   * Added metrics `metrics(name, value)`. Thanks @nachooya
 

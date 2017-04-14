@@ -28,6 +28,7 @@ var checkInterval;
 var lagEventThreshold = -1;
 var eventEmitter = new events.EventEmitter();
 var metrics = {};
+var metricsPrev = {};
 
 /**
  * Main export function.
@@ -163,9 +164,10 @@ function start() {
     lastTime = now;
 
     if (lagEventThreshold !== -1 && currentLag > lagEventThreshold) {
-      eventEmitter.emit(LAG_EVENT, currentLag, metrics);
+      eventEmitter.emit(LAG_EVENT, currentLag, metrics, metricsPrev);
     }
 
+    metricsPrev = metrics;
     metrics = {};
 
   }, interval);
