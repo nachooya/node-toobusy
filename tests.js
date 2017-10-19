@@ -210,4 +210,27 @@ describe('started', function() {
   });
 });
 
+describe('onMeasuredLag event', function() {
+  it('should emit onMeasuredLag event every configured interval', function(done) {
+
+    var timesCalled = 5;
+    var meanLag = 0;
+    toobusy.maxLag(10);
+    toobusy.interval(100);
+
+    toobusy.onMeasuredLag(function(currentLag, maxLag, interval) {
+        timesCalled--;
+        (currentLag).should.be.above(0);
+        (maxLag).should.be.equal(10);
+        (interval).should.be.equal(100);
+        meanLag += currentLag;
+        if (timesCalled === 0) {
+            console.log ('meanLag: '+(meanLag/5));
+            toobusy.shutdown();
+            done();
+        }
+    });
+
+  });
+});
 

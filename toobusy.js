@@ -8,6 +8,7 @@ var events = require('events');
 var STANDARD_HIGHWATER = 70;
 var STANDARD_INTERVAL = 500;
 var LAG_EVENT = "LAG_EVENT";
+var MEASURED_LAG_EVENT= "MEASURED_LAG_EVENT";
 
 // A dampening factor.  When determining average calls per second or
 // current lag, we weigh the current value against the previous value 2:1
@@ -144,6 +145,14 @@ toobusy.onLag = function (fn, threshold) {
   eventEmitter.on(LAG_EVENT, fn);
 };
 
+/**
+ * Registers an event listener for measured lag events,
+ * @param {Function}  fn  Function of form onLag(value: number, maxLag: number, interval: number) => void
+ */
+toobusy.onMeasuredLag = function (fn) {
+  eventEmitter.on(MEASURED_LAG_EVENT, fn);
+};
+
 toobusy.metric = function (name, value) {
 
   if (!metrics[name]) metrics[name] = 0;
@@ -166,6 +175,8 @@ function start() {
     if (lagEventThreshold !== -1 && currentLag > lagEventThreshold) {
       eventEmitter.emit(LAG_EVENT, currentLag, metrics, metricsPrev);
     }
+
+    eventEmitter.emit(MEASURED_LAG_EVENT, currentLag, lagEventThreshold, interval);
 
     metricsPrev = metrics;
     metrics = {};

@@ -1,3 +1,6 @@
+### 0.6.2
+  * Added `onMeasuredLag` event. Thanks @nachooya
+
 ### 0.6.1
   * Added metricsPrev paramater to `onLag` event. Thanks @nachooya
 

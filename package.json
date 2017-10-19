@@ -2,7 +2,7 @@
   "name": "toobusy-why",
   "description": "Don't fall over when your Node.JS server is too busy. Now without native dependencies and metrics support!",
   "homepage": "https://github.com/nachooya/node-toobusy",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "dependencies": {},
   "devDependencies": {
     "mocha": "1.7.0",

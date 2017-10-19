@@ -99,6 +99,10 @@ toobusy.onLag(function(currentLag, metrics, metricsPrev) {
   console.log("Metrics during interval: ", metrics);
   console.log("Metrics previous interval: ", metricsPrev);
 });
+
+toobusy.onMeasuredLag(function(currentLag, maxLag, interval) {
+  console.log("Measured Lag during last interval: '+currentLag);
+})
 ```
 
 The default maxLag value is 70ms, and the default check interval is 500ms.
